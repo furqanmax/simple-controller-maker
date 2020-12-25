@@ -168,7 +168,7 @@
 
 	// }
 
-	var update_request ="";
+	var delete_file ="";
 	var store_validate = "";
 	var store_request = "";
 	for (i = 0; i < x; i++) {
@@ -185,20 +185,11 @@
             }
         }<br>`
         
-        update_request = `
-        $`+ table_name.toLowerCase() +`=`+ table_name +`::findOrFail($id);
-         if($`+ table_name.toLowerCase() +`->index!=""){
-             $old`+ table_name.toLowerCase() +`=`+ table_name +`::where('index',$request->index)->first();
-             if($old`+ table_name.toLowerCase() +`==""){
-                 $`+ table_name.toLowerCase() +`->index=$request->index;
-             }
-             else{
-                 $old`+ table_name.toLowerCase() +`->index=0;
-                 $old`+ table_name.toLowerCase() +`->update();
-                 $`+ table_name.toLowerCase() +`->index=$request->index;
-             }
-             
-         }<br>`
+        delete_file += `
+        if($`+ table_name.toLowerCase() +`->`+gcol+`!=="no-image.png"){
+            unlink('uploads/`+ table_name.toLowerCase() +`/'.$`+ table_name.toLowerCase() +`->`+gcol+`);
+        }<br>`
+
 	  }else{
 
 	  	store_request += `         $`+ table_name.toLowerCase() +`->`+gcol+` = $request->`+gcol+`;<br>`	
@@ -233,7 +224,7 @@
 	  document.getElementById("index").innerHTML = `
     public function index()
     {
-        $`+table_name.toLowerCase()+`s = `+ table_name +`::all();
+        $`+table_name.toLowerCase()+`s = `+ table_name +`::orderBy('updated_at','desc')->get();
         return view('` + newFolderDot + table_name.toLowerCase() + `s.index',compact('`+ table_name.toLowerCase() +`s')); 
     }`;
 
@@ -287,17 +278,17 @@
 
     // update function
 	var update_code = `
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
     	$this->validate($request,[<br>`
     	+store_validate+`
     	]);<br>
-    	`+ update_request +`
+
     	$`+ table_name.toLowerCase() +`=`+ table_name +`::findOrFail($id);<br>`
     	+ store_request+`         $`+ table_name.toLowerCase() +`->`+text+`=$request->`+text+`;<br>
 
     	if($` + table_name.toLowerCase() + `->update()){
-    	    return redirect()->route('` + table_name.toLowerCase() + `s.index');
+    	    return redirect()->back()->with('success',' ` + table_name.toLowerCase() + ` Added successfully.');
     	}
     	else{
     	    return redirect()->back()->with('unsuccess','Failed try again.');
@@ -313,6 +304,7 @@
     public function delete($id)
     {
     	$`+ table_name.toLowerCase() + `=` + table_name + `::findOrFail($id);
+    	`+ delete_file +`
     	if(`+ table_name + `::where('id',$id)->delete()){
          return redirect()->back()->with('success',' `+ table_name + ` deleted successfully.');
         }
