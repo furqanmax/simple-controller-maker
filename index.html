@@ -3,34 +3,44 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
 	<title></title>
+	<style type="text/css">
+		
+	</style>
 </head>
 <body>
-	<p>Write something in the text field to trigger a function.</p>
+	<h4>Write table name and columns in the text field.</h4>
+	<p>Press enter to add column.</p>
 
-	<label for="indexc">Index:</label> <input type="checkbox" id="indexc" onclick="fun_handle()">&nbsp&nbsp&nbsp&nbsp
-	<label for="createc">create:</label> <input type="checkbox" id="createc" onclick="fun_handle()">&nbsp&nbsp&nbsp&nbsp
-	<label for="storec">store:</label> <input type="checkbox" id="storec" onclick="fun_handle()">&nbsp&nbsp&nbsp&nbsp
-	<label for="showc">show:</label> <input type="checkbox" id="showc" onclick="fun_handle()">&nbsp&nbsp&nbsp&nbsp
-	<label for="editc">edit:</label> <input type="checkbox" id="editc" onclick="fun_handle()">&nbsp&nbsp&nbsp&nbsp
-	<label for="updatec">update:</label> <input type="checkbox" id="updatec" onclick="fun_handle()">&nbsp&nbsp&nbsp&nbsp
-	<label for="deletec">delete:</label> <input type="checkbox" id="deletec" onclick="fun_handle()">&nbsp&nbsp&nbsp&nbsp
+	<input type="checkbox" id="indexc" onclick="fun_handle()"> <label for="indexc"> Index </label> &nbsp;&nbsp;&nbsp;&nbsp;
+	 <input type="checkbox" id="createc" onclick="fun_handle()"> <label for="createc"> create </label> &nbsp;&nbsp;&nbsp;&nbsp;
+	 <input type="checkbox" id="storec" onclick="fun_handle()"> <label for="storec"> store </label> &nbsp;&nbsp;&nbsp;&nbsp;
+	 <input type="checkbox" id="showc" onclick="fun_handle()"> <label for="showc"> show </label> &nbsp;&nbsp;&nbsp;&nbsp;
+	 <input type="checkbox" id="editc" onclick="fun_handle()"> <label for="editc"> edit </label> &nbsp;&nbsp;&nbsp;&nbsp;
+	 <input type="checkbox" id="updatec" onclick="fun_handle()"> <label for="updatec"> update </label> &nbsp;&nbsp;&nbsp;&nbsp;
+	 <input type="checkbox" id="deletec" onclick="fun_handle()"> <label for="deletec"> delete </label> &nbsp;&nbsp;&nbsp;&nbsp;
 
 	<br>
 	<input type="text" placeholder="Table name" id="tablename" oninput="myFunction()">
 	<input type="text" placeholder="Folder name" id="folder" oninput="myFunction()">
 	<div class="input_fields_wrap">
     <!-- <button class="add_field_button">Add col</button> -->
-    <div><input type="text" id="0" placeholder="column name" autofocus  onkeypress="handle(event)" name="mytext[]" oninput="myFunction()"><label for="f0">file:</label> <input type="checkbox" id="f0" onclick="myFunction()">&nbsp&nbsp&nbsp&nbsp<label for="r0">required:</label><input type="checkbox" id="r0" onclick="myFunction()"></div>
+    <div><input type="text" id="0" placeholder="column name" autofocus="" onkeypress="handle(event)" name="mytext[]" oninput="myFunction()"> <input type="checkbox" id="f0" onclick="myFunction()"><label for="f0">file</label>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="r0" onclick="myFunction()"><label for="r0">required</label></div>
 </div>
-
-	<pre id="index"></pre>
+ <p>Controller code</p>
+<pre class="prettyprint">
+	<code class="lang-php">
+	<pre id="index" ></pre>
 	<pre id="create"></pre>
 	<pre id="store"></pre>
 	<pre id="show"></pre>
 	<pre id="edit"></pre>
 	<pre id="update"></pre>
 	<pre id="deletes"></pre>
+</code>
+</pre>
+	
 
 	<script>
 
@@ -116,7 +126,7 @@
 				 
 			     // textbox.focus();
 			     // textbox.scrollIntoView();
-				$(wrapper).append('<div><input type="text" id="'+x+'" name="mytext[]" autofocus onkeypress="handle(event)" onkeypress="" oninput="myFunction()"/><a href="#" class="remove_field">X</a><label for="f'+x+'">file:</label> <input type="checkbox" id="f'+x+'" onclick="myFunction()">&nbsp&nbsp&nbsp&nbsp<label for="r'+x+'">required:</label> <input type="checkbox" id="r'+x+'" onclick="myFunction()"></div>&nbsp&nbsp'); //add input box
+				$(wrapper).append('<div><input type="text" id="'+x+'" name="mytext[]" autofocus onkeypress="handle(event)" onkeypress="" oninput="myFunction()"/><a href="#" class="remove_field">X</a> <input type="checkbox" id="f'+x+'" onclick="myFunction()"><label for="f'+x+'">file</label>&nbsp&nbsp&nbsp&nbsp <input type="checkbox" id="r'+x+'" onclick="myFunction()"><label for="r'+x+'">required</label></div>&nbsp&nbsp'); //add input box
 				document.getElementById(x.toString()).focus();
 				myFunction();
 			}
@@ -316,6 +326,9 @@
 
 	</script>
 </body>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+
 </html>
 
  
