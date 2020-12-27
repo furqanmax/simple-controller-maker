@@ -3,20 +3,24 @@
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
 
 
+<script type="text/javascript" src="./js/controller.js"></script>  
 
+<!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/vs2015.min.css"> -->
+<!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/night-owl.min.css"> -->
 
 
 	<title></title>
 	<style type="text/css">
 		body {
-			background-color: #f4f4f4;
+			background-color: #f1f1f1;
 			color: #ccc;
 			font-family: Poppins, Helvetica, sans-serif;
 			padding: 0px 30px 0px 30px;
 		}
+
 		input {
 			background-color: white;
 			color: black;
@@ -27,13 +31,88 @@
 			border: none;
 		}
 
+		::placeholder {
+		  color: gray;
+		  opacity: 0.5; /* Firefox */
+		}
+
 		label{
 			color: #969696;
+
 		}
+
+		.dark{
+			background-color: #212121;
+			color: #444;
+			font-family: Poppins, Helvetica, sans-serif;
+			padding: 0px 30px 0px 30px;
+
+		}
+
+		.dark pre{
+			color: white;
+			
+		}
+.copy {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 12px;
+  color: #013BF7;
+  float: right;
+}
+
+
+
+/* Style the tab */
+.tab {
+	margin-top: 18px;
+  overflow: hidden;
+  /*border: 1px solid #ccc;*/
+  /*background-color: #f4f4f4;*/
+  color: #969696;
+}
+		/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 16px;
+  color: #969696;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  /*background-color: #ddd;*/
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  /*background-color: #ccc;*/
+  color: #444;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  /*border: 1px solid #ccc;*/
+  border-top: none;
+}
 	</style>
 </head>
 <body>
-<div style="width: 50%; float: left;">
+	
+<div style="width: 45%; float: left;">
+	<!-- <button class="tablinks" onclick="darkMode()">Toggle dark mode</button> -->
 	<div >
 		<h1 id="titles" style="margin-bottom: 0px;">Simple controller maker</h1>
 	
@@ -64,8 +143,54 @@
     <p id="pn" style="font-size: 12px; color: #969696;">Press enter to add column.</p>
 </div>
 </div>
- <div style="width: 50%; float: left; color: #444;">
- 	<p>Controller code</p>
+ <div style="width: 50%; float: left; color: #444; margin-left: 20px;">
+
+
+
+<div class="tab">
+  <button class="tablinks active" onclick="openCode(event, 'Controller')">Controller</button>
+  <button class="tablinks" onclick="openCode(event, 'Table')">Table</button>
+  <button class="tablinks" onclick="openCode(event, 'Form')">Form</button>
+  <button class="tablinks" onclick="openCode(event, 'SQL query')">SQL query</button>
+
+</div>
+
+<div id="Controller" style="display: block;" class="tabcontent">
+  <!-- <p>Controller code</p> -->
+  <button class="copy"  onclick="copyCode('p1')">Copy</button>
+<pre style="border: none;"  id="p1">
+	<code class="php">
+	<pre  id="index" ></pre>
+	<pre  id="create"></pre>
+	<pre  id="store"></pre>
+	<pre  id="show"></pre>
+	<pre  id="edit"></pre>
+	<pre  id="update"></pre>
+	<pre  id="deletes"></pre>
+</code>
+</pre>
+</div>
+
+<div id="Table" class="tabcontent">
+  <p>Index table code</p>
+  <button class="copy"  onclick="copyCode('p2')">Copy</button> 
+  <pre id="p2">
+  	<code id="htmlTable"></code>
+  </pre>
+</div>
+
+<div id="Form" class="tabcontent">
+  <h3>Form</h3>
+  <p>Comming soon...</p>
+</div>
+
+<div id="SQL query" class="tabcontent">
+  <h3>SQL query</h3>
+  <p>Comming soon...</p>
+</div>
+
+
+ 	<!-- <p>Controller code</p>
 <pre style="border: none;"  class="prettyprint">
 	<code  class="lang-php">
 	<pre id="index" ></pre>
@@ -76,305 +201,61 @@
 	<pre id="update"></pre>
 	<pre id="deletes"></pre>
 </code>
-</pre>
+</pre> -->
 
  </div>	
 
+
+<!-- <script type="text/javascript" src="./js/enlighterjs.min.js"></script>
+    <script type="text/javascript">
+        // INIT CODE - simple page-wide initialization based on css selectors
+        // - highlight all pre + code tags (CSS3 selectors)
+        // - use javascript as default language
+        // - use theme "enlighter" as default theme
+        // - replace tabs with 2 spaces
+        EnlighterJS.init('pre', 'code', {
+                language : 'javascript',
+                theme: 'enlighter',
+                indent : 2
+        });
+    </script>
+ -->
+
+<script>hljs.initHighlightingOnLoad();</script>
 	<script>
-
-		function fun_handle() {
-		  var indexc = document.getElementById("indexc");
-		  var index = document.getElementById("index");
-		  
-		  var createc = document.getElementById("createc");
-		  var create = document.getElementById("create");
-
-		  var storec = document.getElementById("storec");
-		  var store = document.getElementById("store");
-
-		  var showc = document.getElementById("showc");
-		  var show = document.getElementById("show");
-
-		  var editc = document.getElementById("editc");
-		  var edit = document.getElementById("edit");
-
-		  var updatec = document.getElementById("updatec");
-		  var update = document.getElementById("update");
-
-		  var deletec = document.getElementById("deletec");
-		  var deletes = document.getElementById("deletes");
-
-
-		  if (indexc.checked != true){
-		    index.style.display = "none";
-		  } else {
-		     index.style.display = "block";
-		  }
-
-		  if (createc.checked != true){
-		    create.style.display = "none";
-		  } else {
-		     create.style.display = "block";
-		  }
-
-		  if (storec.checked != true){
-		    store.style.display = "none";
-		  } else {
-		     store.style.display = "block";
-		  }
-
-		  if (showc.checked != true){
-		    show.style.display = "none";
-		  } else {
-		     show.style.display = "block";
-		  }
-
-		  if (editc.checked != true){
-		    edit.style.display = "none";
-		  } else {
-		     edit.style.display = "block";
-		  }
-
-		  if (updatec.checked != true){
-		    update.style.display = "none";
-		  } else {
-		     update.style.display = "block";
-		  }
-
-		  if (deletec.checked != true){
-		    deletes.style.display = "none";
-		  } else {
-		     deletes.style.display = "block";
-		  }
-
+		function copyCode(e) {
+			
+			var range = document.createRange();
+            range.selectNode(document.getElementById(e));
+            window.getSelection().removeAllRanges(); // clear current selection
+            window.getSelection().addRange(range); // to select text
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();// to deselect
 		}
 
-	function tablehandle(e){
-		if(e.keyCode === 13){
-            e.preventDefault(); // Ensure it is only this code that runs
-            document.getElementById("hcol").style.display="block";
-            document.getElementById("pn").style.display="none";
-            document.getElementById("0").focus();
-        }
-	}
-
-	var x = 0;
-		function handle(e){
-					var max_fields      = 50; //maximum input boxes allowed
-		var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
-		var add_button      = $(".add_field_button"); //Add button ID
-        if(e.keyCode === 13){
-            e.preventDefault(); // Ensure it is only this code that runs
-
-
-            var txt = document.getElementById(x.toString()).value ;
-            var len =txt.split(" ").length;
-            console.log(len<1);
-            if (len >= 2)
-			{
-				
-			      alert("column name cannot have space");
-			      // console.log("Invalid Text");
-			      return;
-			}
-
-            document.getElementById("pn").style.display="none";
-            // document.getElementById("titles").style.display="none";
-            if(x < max_fields){ //max input box allowed
-				x++; //text box increment
-				console.log(x.toString());
-				 
-			     // textbox.focus();
-			     // textbox.scrollIntoView();
-				$(wrapper).append('<div><input type="text" placeholder="column name" id="'+x+'" name="mytext[]" autofocus onkeypress="handle(event)" onkeypress="" oninput="myFunction()"/> <input type="checkbox" id="f'+x+'" onclick="myFunction()"><label for="f'+x+'">file</label>&nbsp&nbsp&nbsp&nbsp <input type="checkbox" id="r'+x+'" onclick="myFunction()"><label for="r'+x+'">required</label></div>'); //add input box
-				document.getElementById(x.toString()).focus();
-				myFunction();
-			}
-        }
-    }
-
-
-		
-	$(document).ready(function() {
-		var max_fields      = 50; //maximum input boxes allowed
-		var wrapper   		= $(".input_fields_wrap"); //Fields wrapper
-		var add_button      = $(".add_field_button"); //Add button ID
-		
-		 //initlal text box count
-		$(add_button).click(function(e){ //on add input button click
-			e.preventDefault();
-			if(x < max_fields){ //max input box allowed
-				x++; //text box increment
-				$(wrapper).append('<div><input type="text" id="'+x+'" name="mytext[]" onkeypress="" oninput="myFunction()"/><button onclick="" class="remove_field">x</button></div>&nbsp&nbsp'); //add input box
-			}
-		});
-		
-		$(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-			e.preventDefault(); $(this).parent('div').remove(); x--;
-		})
-	});
-
-
-
-
-	function myFunction() {
-	var table_name = document.getElementById("tablename").value;
-	var folder_name = document.getElementById("folder").value+".";
-
-
-	    var cols = [];
-	// for (i = 0; i < x; i++) {
-	//   var gcol = document.getElementById(i.toString()).value;
-
-	// }
-
-	var delete_file ="";
-	var store_validate = "";
-	var store_request = "";
-	for (i = 0; i < x; i++) {
-	  var gcol = document.getElementById(i.toString()).value;
-	  var checkBoxf = document.getElementById("f"+i);
-	  if (checkBoxf.checked == true){
-
-	  	store_request += `
-	  	if($request->file('`+gcol+`')) {
-            $upload = $request->file('`+gcol+`');
-            $fileformat = time() . '.' . $upload->getClientOriginalName();
-            if ($upload->move('uploads/`+ table_name.toLowerCase() +`/', $fileformat)) {
-                $`+ table_name.toLowerCase() +`->`+gcol+` = $fileformat;
-            }
-        }<br>`
-        
-        delete_file += `
-        if($`+ table_name.toLowerCase() +`->`+gcol+`!=="no-image.png"){
-            unlink('uploads/`+ table_name.toLowerCase() +`/'.$`+ table_name.toLowerCase() +`->`+gcol+`);
-        }<br>`
-
-	  }else{
-
-	  	store_request += `         $`+ table_name.toLowerCase() +`->`+gcol+` = $request->`+gcol+`;<br>`	
-	  }
-	  
-	  var checkBoxr = document.getElementById("r"+i);
-	  if (checkBoxr.checked == true){
-	    store_validate += `         '`+gcol+`'=>'required',<br>`
-	  }
-
-	}
-	// for (j = 0; j < x; j++) {
-	//   var gcol = document.getElementById(j.toString()).value;
-	//   store_request += `$`+ table_name.toLowerCase() +`->`+gcol+`=$request->`+gcol+`;<br>`
-	// }
-
-
-
-	// var cols = [];
-	// for (i = 0; i < x; i++) {
-	//   cols[i] = document.getElementById(i.toString()).value;
-	// }
-	var newFolderDot="";
-	var text = document.getElementById(i.toString()).value
-	if(folder_name!=="."){
-		newFolderDot=folder_name;
-	}else{
-		newFolderDot="";
-	}
-	
-	  // index function
-	  document.getElementById("index").innerHTML = `
-    public function index()
-    {
-        $`+table_name.toLowerCase()+`s = `+ table_name +`::orderBy('updated_at','desc')->get();
-        return view('` + newFolderDot + table_name.toLowerCase() + `s.index',compact('`+ table_name.toLowerCase() +`s')); 
-    }`;
-
-	// Create function
-	document.getElementById("create").innerHTML = `
-    public function create()
-    {
-        return view('` + newFolderDot + table_name.toLowerCase() + `s.create');
-    }`;
-
-    // store function
-    var store_code = `
-    public function store(Request $request)
-    {
-         $this->validate($request,[<br>`
-         +store_validate+`
-
-        ]);
-        $`+ table_name.toLowerCase() +` = new `+ table_name +`();
-        <br>`
-        + store_request+`         $`+ table_name.toLowerCase() +`->`+text+`=$request->`+text+`;<br>
-
-        if($` + table_name.toLowerCase() + `->save()){
-            return redirect()->back()->with('success',' ` + table_name.toLowerCase() + ` Added successfully.');
-        }
-        else{
-            return redirect()->back()->with('unsuccess','Failed try again.');
-        }
-
-    }`;
-
-	document.getElementById("store").innerHTML = store_code;
-
-
-	// show function
-	document.getElementById("show").innerHTML = `
-    public function show($id)
-    {
-    	$`+ table_name.toLowerCase() + `=` + table_name + `::findOrFail($id);
-        return view('` + newFolderDot + table_name.toLowerCase() + `s.show',compact('` + table_name.toLowerCase() + `'));
-    }`;
-
-
-    // edit function
-	document.getElementById("edit").innerHTML = `
-    public function edit($id)
-    {
-    	$`+ table_name.toLowerCase() + `=` + table_name + `::findOrFail($id);
-        return view('` + newFolderDot + table_name.toLowerCase() + `s.edit',compact('` + table_name.toLowerCase() + `'));
-    }`;
-
-    // update function
-	var update_code = `
-    public function update(CategoryRequest $request, $id)
-    {
-    	$this->validate($request,[<br>`
-    	+store_validate+`
-    	]);<br>
-
-    	$`+ table_name.toLowerCase() +`=`+ table_name +`::findOrFail($id);<br>`
-    	+ store_request+`         $`+ table_name.toLowerCase() +`->`+text+`=$request->`+text+`;<br>
-
-    	if($` + table_name.toLowerCase() + `->update()){
-    	    return redirect()->back()->with('success',' ` + table_name.toLowerCase() + ` Added successfully.');
-    	}
-    	else{
-    	    return redirect()->back()->with('unsuccess','Failed try again.');
-    	}
-	       
-    }`;
-	    document.getElementById("update").innerHTML = update_code;
-
-
-
-	// delete function
-	var delete_code = `
-    public function delete($id)
-    {
-    	$`+ table_name.toLowerCase() + `=` + table_name + `::findOrFail($id);
-    	`+ delete_file +`
-    	if(`+ table_name + `::where('id',$id)->delete()){
-         return redirect()->back()->with('success',' `+ table_name + ` deleted successfully.');
-        }
-        else{
-            return redirect()->back()->with('unsuccess','Failed try again.');
-        }
-    }`;
-    document.getElementById("deletes").innerHTML = delete_code;
-
+function darkMode() {
+   var element = document.body;
+   element.classList.toggle("dark");
 }
+
+		function openCode(evt, codeTab) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(codeTab).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+
+
+
+
 
 	</script>
 </body>
@@ -385,3 +266,9 @@
 
  
       
+
+
+
+
+
+
