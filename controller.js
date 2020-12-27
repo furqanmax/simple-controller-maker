@@ -146,13 +146,19 @@ function fun_handle() {
 
 	var delete_file ="";
 	var store_validate = "";
+	var store_request = "";
 
 	var table_value = "";
 	var table_cols = "";
-	var store_request = "";
+
+	var api_resource = "";
+
+	
 	for (i = 0; i < x; i++) {
 	  var gcol = document.getElementById(i.toString()).value;
 	  var checkBoxf = document.getElementById("f"+i);
+
+
 	  if (checkBoxf.checked == true){
 
 	  	store_request += `
@@ -172,12 +178,14 @@ function fun_handle() {
 
         table_value += `                            &lt;td&gt;&lt;img src="{{asset("uploads/`+ table_name.toLowerCase() +`/".$`+ table_name.toLowerCase() +`->`+gcol+`)}}" width=100&gt;&lt;/td&gt;<br>`
 
+        api_resource += `            '`+gcol+`' => $url."/uploads/`+ table_name.toLowerCase() +`/".$this->`+gcol+`,<br>`
+
 	  }else{
 
 	  	store_request += `        $`+ table_name.toLowerCase() +`->`+gcol+` = $request->`+gcol+`;<br>`	
 	  	table_value += `                            &lt;td&gt;{{$`+ table_name.toLowerCase() +`->`+gcol+`}}&lt;/td&gt;<br>`
         table_cols += `                            &lt;th&gt;`+gcol+`&lt;/th&gt;<br>`
-
+        api_resource += `            '`+gcol+`' => $this->`+gcol+`,<br>`
         
 	  }
 	  
@@ -264,7 +272,7 @@ function fun_handle() {
 
     // update function
 	var update_code = `
-    public function update(CategoryRequest $request, $id)
+    public function update(Request $request, $id)
     {
     	$this->validate($request,[<br>`
     	+store_validate+`
@@ -362,5 +370,117 @@ document.getElementById("htmlTable").innerHTML = `
  			 &lt;/div&gt;
 
 `;
+
+
+// 
+// 
+// API code starts form here
+// 
+// 
+
+document.getElementById('apiResource').innerHTML = `
+    public function toArray($request)
+    {
+        $url=URL::to('/');
+        return [
+            'id' =>$this->id,<br>`
+            +api_resource+
+            `
+        ];
+    }
+
+`
+
+
+// document.getElementById('apiController').innerHTML = `
+
+// `
+
+// API index function
+	document.getElementById("apiindex").innerHTML = `
+    public function index()
+    {
+    	return `+table_name+`Resource::collection(`+table_name+`::all());
+        
+    }`;
+
+
+    // API store function
+    var apistore_code = `
+    public function store(Request $request)
+    {
+         $this->validate([<br>`
+         +store_validate+`
+
+        ]);
+        $`+ table_name.toLowerCase() +` = new `+ table_name +`();
+        <br>`
+        + store_request+`         $`+ table_name.toLowerCase() +`->`+text+`=$request->`+text+`;<br>
+
+        if($` + table_name.toLowerCase() + `->save()){
+            return response()->json([ 
+                    'status'=>'S',
+                    
+                    
+                    ]);
+        }
+        else{
+            return response()->json([ 
+                    'status'=>'F',
+                   
+                    
+                    ]);
+        }
+
+    }`;
+
+    document.getElementById("apistore").innerHTML = apistore_code;
+
+
+
+// API update function
+	var apiupdate_code = `
+    public function update(`+ table_name.toLowerCase() +`Request $request, $id)
+    {
+    	$this->validate($request,[<br>`
+    	+store_validate+`
+    	]);<br>
+
+    	$`+ table_name.toLowerCase() +`=`+ table_name +`::findOrFail($id);<br>`
+    	+ store_request+`         $`+ table_name.toLowerCase() +`->`+text+`=$request->`+text+`;<br>
+
+    	if($item->update()){
+           return [
+               'status' => 'S',
+           ];
+        }else{
+            return [
+                'status' => 'F',
+            ];
+        }
+        return $request;   
+	       
+    }`;
+	    document.getElementById("apiupdate").innerHTML = apiupdate_code;
+
+
+
+// API delete function
+	var apidelete_code = `
+    public function delete($id)
+    {
+    	$`+ table_name.toLowerCase() + `=` + table_name + `::findOrFail($id);
+    	`+ delete_file +`
+    	if(`+ table_name + `::where('id',$id)->delete()){
+         return "S";
+        }
+        else{
+            return "F";
+        }
+    }`;
+    document.getElementById("apideletes").innerHTML = apidelete_code;
+
+
+
 
 }
