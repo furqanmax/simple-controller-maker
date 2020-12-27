@@ -114,12 +114,12 @@
 <div style="width: 45%; float: left;">
 	<!-- <button class="tablinks" onclick="darkMode()">Toggle dark mode</button> -->
 	<div >
-		<h1 id="titles" style="margin-bottom: 0px;">Simple controller maker</h1>
+		<h1 id="titles" style="margin-bottom: 0px;">CRUD maker</h1>
 	
 	<p style="font-size: 14px; margin-top: 0px;">Write table name and columns in the text field.</p>
 	</div>
 	
-
+	 <input type="checkbox" checked="true"  id="selectAll" onclick="selectAll()">
 	 <input type="checkbox" checked="true"  id="indexc" onclick="fun_handle()"> <label for="indexc"> Index </label> &nbsp;&nbsp;&nbsp;&nbsp;
 	 <input type="checkbox" checked="true"  id="createc" onclick="fun_handle()"> <label for="createc"> create </label> &nbsp;&nbsp;&nbsp;&nbsp;
 	 <input type="checkbox" checked="true"  id="storec" onclick="fun_handle()"> <label for="storec"> store </label> &nbsp;&nbsp;&nbsp;&nbsp;
@@ -149,9 +149,11 @@
 
 <div class="tab">
   <button class="tablinks active" onclick="openCode(event, 'Controller')">Controller</button>
+  <button class="tablinks" onclick="openCode(event, 'API Resource')">API Resource & Controller</button>
   <button class="tablinks" onclick="openCode(event, 'Table')">Table</button>
   <button class="tablinks" onclick="openCode(event, 'Form')">Form</button>
   <button class="tablinks" onclick="openCode(event, 'SQL query')">SQL query</button>
+  
 
 </div>
 
@@ -171,6 +173,25 @@
 </pre>
 </div>
 
+<div id="API Resource" class="tabcontent">
+  <p style="margin:0px">API Resource code</p>
+  <p style="font-size: 12px;">copy and paste this code in app/http/Resource/ in resource file</p>
+  <button class="copy"  onclick="copyCode('p3')">Copy</button>
+  <pre id="p3">
+  	<code id="apiResource"></code>
+  </pre>
+  <p style="margin:0px">API Controller code</p>
+  <p style="font-size: 12px;">copy and paste this code in app/http/controller/api/ in controller file</p>
+  <button class="copy"  onclick="copyCode('p4')">Copy</button>
+  <pre id="p4">
+  	<code id="apiindex"></code>
+  	<code id="apistore"></code>
+  	<code id="apiupdate"></code>
+  	<code id="apideletes"></code>
+  	<!-- <code id="apiController"></code> -->
+  </pre>
+</div>
+
 <div id="Table" class="tabcontent">
   <p>Index table code</p>
   <button class="copy"  onclick="copyCode('p2')">Copy</button> 
@@ -180,14 +201,30 @@
 </div>
 
 <div id="Form" class="tabcontent">
-  <h3>Form</h3>
+  <h3>form</h3>
   <p>Comming soon...</p>
 </div>
+
+
+
+
+<!-- <div id="API Resource" class="tabcontent">
+  <p style="margin:0px">API Resource code</p>
+  <p style="font-size: 12px;">copy and paste this code in app/http/Resource/ in resource file</p>
+  <button class="copy"  onclick="copyCode('p3')">Copy</button>
+  <pre id="p3">
+  	<code id="apiResource"></code>
+  </pre>
+</div> -->
+
 
 <div id="SQL query" class="tabcontent">
   <h3>SQL query</h3>
   <p>Comming soon...</p>
 </div>
+
+
+
 
 
  	<!-- <p>Controller code</p>
@@ -223,6 +260,30 @@
 
 <script>hljs.initHighlightingOnLoad();</script>
 	<script>
+function selectAll(){
+	if (selectAll.checked == true){
+		    indexc.checked = true;
+			createc.checked = true;
+			storec.checked = true;
+			showc.checked = true;
+			editc.checked = true;
+			updatec.checked = true;
+			deletec.checked = true;
+			selectAll.checked = false;
+			fun_handle();
+		  } else {
+		  	indexc.checked = false;
+			createc.checked = false;
+			storec.checked = false;
+			showc.checked = false;
+			editc.checked = false;
+			updatec.checked = false;
+			deletec.checked = false;
+		    selectAll.checked = true;
+		    fun_handle();
+		  }
+}
+
 		function copyCode(e) {
 			
 			var range = document.createRange();
