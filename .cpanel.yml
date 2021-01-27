@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home3/sadathus/public_html/test
+    - /bin/cp index.html $DEPLOYPATH
+    - /bin/cp controller.css $DEPLOYPATH
